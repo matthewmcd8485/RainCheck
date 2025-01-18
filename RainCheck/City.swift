@@ -9,7 +9,9 @@ import Foundation
 import SwiftData
 
 @Model
-final class City {
+final class City: Identifiable {
+    var id = UUID()
+    
     var name: String
     
     var temperature: Int?
