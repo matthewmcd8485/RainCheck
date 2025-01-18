@@ -22,7 +22,7 @@ struct HomeView: View {
     @State private var hideSavedCityView = false
 
     var body: some View {
-        GeometryReader { _ in 
+        GeometryReader { _ in
             ZStack {
                 // Tap gesture to dismiss keyboard
                 Color.clear
@@ -69,8 +69,8 @@ struct HomeView: View {
                     Spacer()
                 }
             }
-            .ignoresSafeArea(.keyboard)
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     // MARK: - Search Bar
