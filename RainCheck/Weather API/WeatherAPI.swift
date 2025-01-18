@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WeatherAPIService: WeatherService {
+class WeatherAPI: WeatherService {
     private let apiKey = APIKey.weatherAPIKey
     
     func fetchWeather(for cityName: String) async throws -> City {
@@ -22,11 +22,11 @@ class WeatherAPIService: WeatherService {
         // Populate and return the City object
         let weather = weatherResponse.current
         let city = City(name: weatherResponse.location.name)
-        city.temperature = Int(weather.temp_f)
+        city.temperature = Int(weather.temp_f.rounded())
         city.conditionIconURL = weather.condition.icon
         city.humidity = Int(weather.humidity)
-        city.uvIndex = Int(weather.uv)
-        city.feelsLike = Int(weather.feelslike_f)
+        city.uvIndex = Int(weather.uv.rounded())
+        city.feelsLike = Int(weather.feelslike_f.rounded())
         
         return city
     }

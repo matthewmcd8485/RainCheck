@@ -13,12 +13,21 @@ struct CityView: View {
     
     var body: some View {
         VStack {
-            // Placeholder for the icon
-            Image(systemName: "cloud.fill")
-                .font(.system(size: 70))
-                .foregroundStyle(.gray)
-                .symbolRenderingMode(.hierarchical)
+            if let conditionIconURL = city.conditionIconURL, let url = URL(string: "https:\(conditionIconURL)") {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 125, height: 125)
+                } placeholder: {
+                    Image(systemName: "cloud.fill")
+                        .font(.system(size: 70))
+                        .foregroundStyle(.gray)
+                        .symbolRenderingMode(.hierarchical)
+                        .padding(.bottom)
+                }
                 .padding(.bottom)
+            }
             
             // City name
             HStack {
@@ -34,7 +43,7 @@ struct CityView: View {
                     .font(.custom("Poppins-Bold", size: 72))
                 
                 Text("°")
-                    .font(.custom("Poppins-Regular", size: 40))
+                    .font(.custom("Poppins-Regular", size: 72))
             }
 
             detailView
@@ -55,10 +64,15 @@ struct CityView: View {
                         .font(.custom("Poppins-Regular", size: 16))
                         .foregroundStyle(.tertiary)
                     
-                    Text(city.humidity.map { String($0) } ?? "-")
-                        .font(.custom("Poppins-Bold", size: 16))
-                        .foregroundStyle(.secondary)
-
+                    HStack(spacing: 0) {
+                        Text(city.humidity.map { String($0) } ?? "-")
+                            .font(.custom("Poppins-Bold", size: 16))
+                            .foregroundStyle(.secondary)
+                        
+                        Text("%")
+                            .font(.custom("Poppins-Regular", size: 16))
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 
                 Spacer()
@@ -83,12 +97,12 @@ struct CityView: View {
                         .font(.custom("Poppins-Regular", size: 16))
                         .foregroundStyle(.tertiary)
                     
-                    HStack {
-                        Text(city.humidity.map { String($0) } ?? "-")
+                    HStack(spacing: 0) {
+                        Text(city.feelsLike.map { String($0) } ?? "-")
                             .font(.custom("Poppins-Bold", size: 16))
                             .foregroundStyle(.secondary)
                         
-                        Text(city.humidity.map { String($0) } ?? "°")
+                        Text("°")
                             .font(.custom("Poppins-Regular", size: 16))
                             .foregroundStyle(.secondary)
                     }

@@ -22,22 +22,33 @@ struct SearchResultListItemView: View {
                         .font(.custom("Poppins-Bold", size: 24))
                     
                     HStack {
-                        Text(city.humidity.map { String($0) } ?? "-")
+                        Text(city.temperature.map { String($0) } ?? "-")
                             .font(.custom("Poppins-Bold", size: 32))
                         
-                        Text(city.humidity.map { String($0) } ?? "°")
+                        Text("°")
                             .font(.custom("Poppins-Regular", size: 32))
                     }
                 }
                 
                 Spacer()
                 
-                // Placeholder for the icon
-                Image(systemName: "cloud.fill")
-                    .font(.system(size: 70))
-                    .foregroundStyle(.gray)
-                    .symbolRenderingMode(.hierarchical)
+                if let conditionIconURL = city.conditionIconURL, let url = URL(string: "https:\(conditionIconURL)") {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 75, height: 75)
+                    } placeholder: {
+                        ProgressView()
+                    }
                     .padding(.bottom)
+                } else {
+                    Image(systemName: "cloud.fill")
+                        .font(.system(size: 75))
+                        .foregroundStyle(.gray)
+                        .symbolRenderingMode(.hierarchical)
+                        .padding(.bottom)
+                }
             }
             .padding(.vertical)
             .padding(.horizontal, 25)

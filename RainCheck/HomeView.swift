@@ -18,9 +18,9 @@ struct HomeView: View {
     
     @State private var searchText = ""
     @State private var searchResults: [City] = []
-    
+    @State private var errorMessage: String?
     @State private var hideSavedCityView = false
-
+    
     var body: some View {
         GeometryReader { _ in
             ZStack {
@@ -35,14 +35,17 @@ struct HomeView: View {
                     searchBarView
                         .padding()
                     
-                    if !searchResults.isEmpty {
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.red)
+                            .padding()
+                    } else if !searchResults.isEmpty {
                         ForEach(searchResults) { city in
                             Button(action: {
                                 saveCity(city)
-                                
                                 searchText = ""
                                 searchResults = []
-                                
                                 hideSavedCityView = false
                             }) {
                                 SearchResultListItemView(city: city)
@@ -55,7 +58,7 @@ struct HomeView: View {
                     Spacer()
                     
                     // Display the saved city if it exists
-                    if let savedCity = savedCities.first, !hideSavedCityView {
+                    if let savedCity = savedCity, !hideSavedCityView {
                         VStack {
                             Text("Selected City:")
                                 .font(.headline)
@@ -71,33 +74,40 @@ struct HomeView: View {
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onAppear {
+            if let city = savedCity {
+                Task {
+                    await fetchWeather(for: city.name)
+                }
+            }
+        }
     }
     
     // MARK: - Search Bar
     var searchBarView: some View {
         ZStack {
-            
             Rectangle()
                 .foregroundStyle(Color(UIColor.secondarySystemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-            
             
             HStack {
                 TextField("Search Location", text: $searchText)
                     .font(.custom("Poppins-Regular", size: 16))
                     .submitLabel(.search)
                     .onSubmit {
-                        // Handle search on return key press
                         if searchText.count > 2 {
-                            searchCities(query: searchText)
-                            hideSavedCityView = true
+                            Task {
+                                await searchCities(query: searchText)
+                                hideSavedCityView = true
+                            }
                         }
                     }
                     .padding(.horizontal)
                 
-                if searchText.count > 0 {
+                if !searchText.isEmpty {
                     Button(action: {
                         searchText = ""
+                        errorMessage = nil
                         searchResults = []
                     }) {
                         Image(systemName: "xmark.circle.fill")
@@ -108,13 +118,11 @@ struct HomeView: View {
                 }
                 
                 Button(action: {
-                    // Requires 3 characters before searching
                     if searchText.count > 2 {
-                        searchCities(query: searchText)
-                        
-                        hideSavedCityView = true
-                    } else {
-                        
+                        Task {
+                            await searchCities(query: searchText)
+                            hideSavedCityView = true
+                        }
                     }
                 }) {
                     Image(systemName: "magnifyingglass")
@@ -127,6 +135,7 @@ struct HomeView: View {
         .fixedSize(horizontal: false, vertical: true)
     }
     
+    // MARK: - Placeholder View
     var placeholderView: some View {
         VStack {
             Text("No City Selected")
@@ -134,35 +143,46 @@ struct HomeView: View {
             
             Text("Please Search for a City")
                 .font(.custom("Poppins-Regular", size: 20))
-            
         }
     }
     
-    let mockCityData = [
-        City(name: "Chicago"),
-        City(name: "Los Angeles"),
-        City(name: "London"),
-        City(name: "Cape Town"),
-        City(name: "Seattle")
-    ]
+    // MARK: - Fetching Weather Data
+    private func fetchWeather(for cityName: String) async {
+        errorMessage = nil
+        do {
+            let city = try await WeatherAPI().fetchWeather(for: cityName)
+            saveCity(city)
+        } catch {
+            errorMessage = "Failed to fetch weather:\n\n \(error.localizedDescription)"
+        }
+    }
     
-    // MARK: - City Searching & Saving
-    private func searchCities(query: String) {
-        if query.isEmpty {
+    // MARK: - Search Cities
+    private func searchCities(query: String) async {
+        errorMessage = nil
+        do {
+            let city = try await WeatherAPI().fetchWeather(for: query)
+            searchResults = [city]
+        } catch {
+            errorMessage = "Failed to fetch weather:\n\n \(error.localizedDescription)\n\n(Are you sure this city exists?)"
             searchResults = []
-        } else {
-            searchResults = mockCityData.filter { $0.name.localizedCaseInsensitiveContains(query) }
         }
     }
     
+    // MARK: - Save City
     private func saveCity(_ city: City) {
-        if let existingCity = savedCities.first {
-            modelContext.delete(existingCity)
+        do {
+            for existingCity in savedCities {
+                modelContext.delete(existingCity)
+            }
+            
+            modelContext.insert(city)
+            
+            try modelContext.save()
+            
+        } catch {
+            errorMessage = "Failed to save city: \(error.localizedDescription)"
         }
-        
-        modelContext.insert(city)
-        
-        try? modelContext.save()
     }
     
     private func dismissKeyboard() {
