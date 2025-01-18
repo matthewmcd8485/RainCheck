@@ -10,6 +10,11 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
+    @Query private var savedCities: [City]
+    
+    private var savedCity: City? {
+        savedCities.first
+    }
     
     @State private var searchText = ""
     @State private var searchResults: [City] = []
@@ -21,14 +26,26 @@ struct HomeView: View {
             
             if !searchResults.isEmpty {
                 ForEach(searchResults) { city in
-                    SearchResultListItemView(name: city.name)
-                        .padding()
+                    Button(action: {
+                        saveCity(city)
+                    }) {
+                        SearchResultListItemView(name: city.name)
+                            .padding()
+                    }
                 }
             }
             
             Spacer()
             
-            if searchText == "" {
+            // Display the saved city if it exists
+            if let savedCity = savedCities.first {
+                VStack {
+                    Text("Selected City:")
+                        .font(.headline)
+                    CityView(city: savedCity)
+                        .padding()
+                }
+            } else if searchText == "" {
                 placeholderView
             }
             
@@ -99,12 +116,23 @@ struct HomeView: View {
         City(name: "Seattle")
     ]
     
+    // MARK: - City Searching & Saving
     private func searchCities(query: String) {
         if query.isEmpty {
             searchResults = []
         } else {
             searchResults = mockCityData.filter { $0.name.localizedCaseInsensitiveContains(query) }
         }
+    }
+    
+    private func saveCity(_ city: City) {
+        if let existingCity = savedCities.first {
+            modelContext.delete(existingCity)
+        }
+        
+        modelContext.insert(city)
+        
+        try? modelContext.save()
     }
 }
 

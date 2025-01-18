@@ -32,6 +32,8 @@
 		C93428852D3B741A0057F811 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C93428632D3B741A0057F811 /* Poppins-BlackItalic.ttf */; };
 		C93428882D3B79080057F811 /* SearchResultListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93428872D3B79080057F811 /* SearchResultListItemView.swift */; };
 		C934288C2D3B7CB70057F811 /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C934288B2D3B7CB70057F811 /* CityView.swift */; };
+		C934288E2D3B84A50057F811 /* RoundedAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C934288D2D3B84A50057F811 /* RoundedAppIcon.png */; };
+		C93428902D3B84B90057F811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C934288F2D3B84B90057F811 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		C93428862D3B76AD0057F811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C93428872D3B79080057F811 /* SearchResultListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultListItemView.swift; sourceTree = "<group>"; };
 		C934288B2D3B7CB70057F811 /* CityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
+		C934288D2D3B84A50057F811 /* RoundedAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RoundedAppIcon.png; sourceTree = "<group>"; };
+		C934288F2D3B84B90057F811 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -158,7 +162,9 @@
 				C93428872D3B79080057F811 /* SearchResultListItemView.swift */,
 				C93428592D3B70350057F811 /* City.swift */,
 				C93428572D3B70350057F811 /* Assets.xcassets */,
+				C934288F2D3B84B90057F811 /* LaunchScreen.storyboard */,
 				C93428862D3B76AD0057F811 /* Info.plist */,
+				C934288D2D3B84A50057F811 /* RoundedAppIcon.png */,
 				C93428612D3B740E0057F811 /* Fonts */,
 				C93428562D3B70350057F811 /* Preview Content */,
 			);
@@ -312,9 +318,11 @@
 				C93428762D3B741A0057F811 /* Poppins-SemiBold.ttf in Resources */,
 				C93428772D3B741A0057F811 /* Poppins-Bold.ttf in Resources */,
 				C93428782D3B741A0057F811 /* Poppins-BoldItalic.ttf in Resources */,
+				C934288E2D3B84A50057F811 /* RoundedAppIcon.png in Resources */,
 				C93428792D3B741A0057F811 /* Poppins-ExtraLightItalic.ttf in Resources */,
 				C934287A2D3B741A0057F811 /* Poppins-ExtraBold.ttf in Resources */,
 				C934287B2D3B741A0057F811 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				C93428902D3B84B90057F811 /* LaunchScreen.storyboard in Resources */,
 				C934287C2D3B741A0057F811 /* Poppins-LightItalic.ttf in Resources */,
 				C934287D2D3B741A0057F811 /* Poppins-MediumItalic.ttf in Resources */,
 				C934287E2D3B741A0057F811 /* Poppins-Thin.ttf in Resources */,
