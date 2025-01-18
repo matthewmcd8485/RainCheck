@@ -27,6 +27,12 @@ struct HomeView: View {
             }
             
             Spacer()
+            
+            if searchText == "" {
+                placeholderView
+            }
+            
+            Spacer()
         }
     }
     
@@ -72,6 +78,17 @@ struct HomeView: View {
             .padding()
         }
         .fixedSize(horizontal: false, vertical: true)
+    }
+    
+    var placeholderView: some View {
+        VStack {
+            Text("No City Selected")
+                .font(.custom("Poppins-Bold", size: 30))
+            
+            Text("Please Search for a City")
+                .font(.custom("Poppins-Regular", size: 20))
+            
+        }
     }
     
     let mockCityData = [

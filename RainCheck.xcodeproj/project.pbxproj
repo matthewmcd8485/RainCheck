@@ -31,6 +31,7 @@
 		C93428842D3B741A0057F811 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C934286F2D3B741A0057F811 /* Poppins-Regular.ttf */; };
 		C93428852D3B741A0057F811 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C93428632D3B741A0057F811 /* Poppins-BlackItalic.ttf */; };
 		C93428882D3B79080057F811 /* SearchResultListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93428872D3B79080057F811 /* SearchResultListItemView.swift */; };
+		C934288C2D3B7CB70057F811 /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C934288B2D3B7CB70057F811 /* CityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		C93428732D3B741A0057F811 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		C93428862D3B76AD0057F811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C93428872D3B79080057F811 /* SearchResultListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultListItemView.swift; sourceTree = "<group>"; };
+		C934288B2D3B7CB70057F811 /* CityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -152,6 +154,7 @@
 			children = (
 				C934285A2D3B70350057F811 /* RainCheckApp.swift */,
 				C93428582D3B70350057F811 /* HomeView.swift */,
+				C934288B2D3B7CB70057F811 /* CityView.swift */,
 				C93428872D3B79080057F811 /* SearchResultListItemView.swift */,
 				C93428592D3B70350057F811 /* City.swift */,
 				C93428572D3B70350057F811 /* Assets.xcassets */,
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C93428882D3B79080057F811 /* SearchResultListItemView.swift in Sources */,
+				C934288C2D3B7CB70057F811 /* CityView.swift in Sources */,
 				C934285C2D3B70350057F811 /* HomeView.swift in Sources */,
 				C934285D2D3B70350057F811 /* City.swift in Sources */,
 				C934285E2D3B70350057F811 /* RainCheckApp.swift in Sources */,
