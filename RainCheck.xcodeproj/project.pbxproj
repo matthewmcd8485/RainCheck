@@ -38,6 +38,7 @@
 		C93428952D3B8E4A0057F811 /* WeatherAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93428942D3B8E4A0057F811 /* WeatherAPIResponse.swift */; };
 		C93428972D3B8FD60057F811 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93428962D3B8FD60057F811 /* WeatherAPI.swift */; };
 		C93428992D3B8FE40057F811 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93428982D3B8FE40057F811 /* WeatherService.swift */; };
+		C934289D2D3BA55C0057F811 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = C934289C2D3BA55C0057F811 /* Documentation.docc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		C93428942D3B8E4A0057F811 /* WeatherAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIResponse.swift; sourceTree = "<group>"; };
 		C93428962D3B8FD60057F811 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		C93428982D3B8FE40057F811 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		C934289C2D3BA55C0057F811 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -176,6 +178,7 @@
 				C934288D2D3B84A50057F811 /* RoundedAppIcon.png */,
 				C93428612D3B740E0057F811 /* Fonts */,
 				C93428562D3B70350057F811 /* Preview Content */,
+				C934289C2D3BA55C0057F811 /* Documentation.docc */,
 			);
 			path = RainCheck;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				C93428952D3B8E4A0057F811 /* WeatherAPIResponse.swift in Sources */,
 				C93428992D3B8FE40057F811 /* WeatherService.swift in Sources */,
 				C93428882D3B79080057F811 /* SearchResultListItemView.swift in Sources */,
+				C934289D2D3BA55C0057F811 /* Documentation.docc in Sources */,
 				C934288C2D3B7CB70057F811 /* CityView.swift in Sources */,
 				C934285C2D3B70350057F811 /* HomeView.swift in Sources */,
 				C934285D2D3B70350057F811 /* City.swift in Sources */,

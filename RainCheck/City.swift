@@ -31,10 +31,14 @@ final class City: Identifiable {
     /// Feels like temperature, displayed in Farenheit.
     var feelsLike: Int?
     
-    /// Default initalizer only needs a name.
+    /// Creates a new instance with the specified name.
     ///
-    /// All other data fields are loaded later.
+    /// - Parameters:
+    ///   - name: A `String` representing the name of the instance. This is the only required parameter at initialization.
+    ///
+    /// All other data fields for this instance are initialized or loaded later.
     init(name: String) {
         self.name = name
     }
+
 }

@@ -7,9 +7,17 @@
 
 import SwiftUI
 
+/// A view representing a single search result in the RainCheck app.
+///
+/// The `SearchResultListItemView` displays:
+/// - The city's name.
+/// - Its current temperature.
+/// - An icon representing the current weather condition.
 struct SearchResultListItemView: View {
+    /// The ``City`` object containing the weather information to display.
     var city: City
     
+    /// The body of the view.
     var body: some View {
         ZStack {
             Rectangle()
@@ -17,6 +25,7 @@ struct SearchResultListItemView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
             
             HStack {
+                // City name and temperature
                 VStack {
                     Text(city.name)
                         .font(.custom("Poppins-Bold", size: 24))
@@ -32,6 +41,7 @@ struct SearchResultListItemView: View {
                 
                 Spacer()
                 
+                // Weather condition icon
                 if let conditionIconURL = city.conditionIconURL, let url = URL(string: "https:\(conditionIconURL)") {
                     AsyncImage(url: url) { image in
                         image

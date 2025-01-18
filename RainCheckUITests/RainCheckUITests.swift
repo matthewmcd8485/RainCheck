@@ -8,36 +8,89 @@
 import XCTest
 
 final class RainCheckUITests: XCTestCase {
-
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+        // Set up before each test method in the class.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        // Launch the application before running each test.
+        XCUIApplication().launch()
     }
-
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Clean up after each test method in the class.
     }
-
+    
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testSearchCityAndDisplayWeather() throws {
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        // Tap the search bar and type a city name
+        let searchField = app.textFields["Search Location"]
+        XCTAssertTrue(searchField.exists, "Search bar should be visible.")
+        searchField.tap()
+        searchField.typeText("Chicago")
+        
+        // Tap the search button
+        let searchButton = app.buttons["magnifyingglass"]
+        XCTAssertTrue(searchButton.exists, "Search button should be visible.")
+        searchButton.tap()
+        
+        // Verify that the city appears in the search results
+        let cityName = app.staticTexts["Chicago"]
+        XCTAssertTrue(cityName.waitForExistence(timeout: 5), "City name should appear in the search results.")
+        
+        // Tap the city in the search results
+        cityName.tap()
     }
-
+    
     @MainActor
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testSavedCityPersistence() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Tap the search bar and type a city name
+        let searchField = app.textFields["Search Location"]
+        searchField.tap()
+        searchField.typeText("New York")
+        
+        // Tap the search button
+        let searchButton = app.buttons["magnifyingglass"]
+        searchButton.tap()
+        
+        // Tap the city in the search results
+        let cityName = app.staticTexts["New York"]
+        XCTAssertTrue(cityName.waitForExistence(timeout: 5), "City name should appear in the search results.")
+        cityName.tap()
+        
+        // Close and relaunch the app to test persistence
+        app.terminate()
+        app.launch()
+        
+        // Verify that the saved city is still displayed
+        let savedCityLabel = app.staticTexts["Selected City:"]
+        XCTAssertTrue(savedCityLabel.exists, "Saved city view should persist between app launches.")
+        let cityNameLabel = app.staticTexts["New York"]
+        XCTAssertTrue(cityNameLabel.exists, "Saved city name should persist between app launches.")
+    }
+    
+    @MainActor
+    func testClearSearchField() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Tap the search bar and type a city name
+        let searchField = app.textFields["Search Location"]
+        searchField.tap()
+        searchField.typeText("Los Angeles")
+        
+        // Tap the clear button
+        let clearButton = app.buttons["xmark.circle.fill"]
+        XCTAssertTrue(clearButton.exists, "Clear button should be visible.")
+        clearButton.tap()
+        
+        // Verify that the search field is empty (equal to placeholder text)
+        XCTAssertEqual(searchField.value as? String, "Search Location", "Search field should be cleared.")
     }
 }
