@@ -45,7 +45,7 @@ struct CityView: View {
     var detailView: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(Color(UIColor.systemGroupedBackground))
+                .foregroundStyle(Color(UIColor.secondarySystemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
             
             HStack {

@@ -18,38 +18,58 @@ struct HomeView: View {
     
     @State private var searchText = ""
     @State private var searchResults: [City] = []
+    
+    @State private var hideSavedCityView = false
 
     var body: some View {
-        VStack {
-            searchBarView
-                .padding()
-            
-            if !searchResults.isEmpty {
-                ForEach(searchResults) { city in
-                    Button(action: {
-                        saveCity(city)
-                    }) {
-                        SearchResultListItemView(name: city.name)
-                            .padding()
+        GeometryReader { _ in 
+            ZStack {
+                // Tap gesture to dismiss keyboard
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        dismissKeyboard()
                     }
-                }
-            }
-            
-            Spacer()
-            
-            // Display the saved city if it exists
-            if let savedCity = savedCities.first {
+                
                 VStack {
-                    Text("Selected City:")
-                        .font(.headline)
-                    CityView(city: savedCity)
+                    searchBarView
                         .padding()
+                    
+                    if !searchResults.isEmpty {
+                        ForEach(searchResults) { city in
+                            Button(action: {
+                                saveCity(city)
+                                
+                                searchText = ""
+                                searchResults = []
+                                
+                                hideSavedCityView = false
+                            }) {
+                                SearchResultListItemView(city: city)
+                                    .padding(.horizontal)
+                            }
+                            .tint(Color(UIColor.label))
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    // Display the saved city if it exists
+                    if let savedCity = savedCities.first, !hideSavedCityView {
+                        VStack {
+                            Text("Selected City:")
+                                .font(.headline)
+                            CityView(city: savedCity)
+                                .padding()
+                        }
+                    } else if searchText == "" {
+                        placeholderView
+                    }
+                    
+                    Spacer()
                 }
-            } else if searchText == "" {
-                placeholderView
             }
-            
-            Spacer()
+            .ignoresSafeArea(.keyboard)
         }
     }
     
@@ -58,13 +78,21 @@ struct HomeView: View {
         ZStack {
             
             Rectangle()
-                .foregroundStyle(Color(UIColor.systemGroupedBackground))
+                .foregroundStyle(Color(UIColor.secondarySystemBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
             
             
             HStack {
                 TextField("Search Location", text: $searchText)
                     .font(.custom("Poppins-Regular", size: 16))
+                    .submitLabel(.search)
+                    .onSubmit {
+                        // Handle search on return key press
+                        if searchText.count > 2 {
+                            searchCities(query: searchText)
+                            hideSavedCityView = true
+                        }
+                    }
                     .padding(.horizontal)
                 
                 if searchText.count > 0 {
@@ -83,6 +111,8 @@ struct HomeView: View {
                     // Requires 3 characters before searching
                     if searchText.count > 2 {
                         searchCities(query: searchText)
+                        
+                        hideSavedCityView = true
                     } else {
                         
                     }
@@ -133,6 +163,10 @@ struct HomeView: View {
         modelContext.insert(city)
         
         try? modelContext.save()
+    }
+    
+    private func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
